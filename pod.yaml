@@ -1,0 +1,22 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx-cinder-backed
+spec:
+  volumes:
+    - name: pvc-8a08a850-cf22-4c2d-8062-05d680dafcdd
+      persistentVolumeClaim:
+       claimName: myclaim
+  nodeSelector:
+        failure-domain.beta.kubernetes.io/zone: nova
+  containers:
+    - name: nginx-cinder-backed
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: pvc-8a08a850-cf22-4c2d-8062-05d680dafcdd
+
+
